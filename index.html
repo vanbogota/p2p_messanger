@@ -31,7 +31,8 @@
         if (permission === 'granted') {
           navigator.serviceWorker.ready.then(swReg => {
             swReg.showNotification('P2P Messanger', {
-              body: 'Notification permission granted'
+              body: 'Notification permission granted',
+              icon: '/public/icons/icon-192.png'
             });
           });
         }
