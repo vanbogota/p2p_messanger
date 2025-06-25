@@ -32,8 +32,8 @@ export function displayMessage(text, type) {
  * Запрашивает разрешение на отправку уведомлений.
  */
 export function requestNotificationPermission() {
-  alert('Requesting requestNotificationPermission...');
-  alert('Notification' in window);
+  // alert('Requesting requestNotificationPermission...');
+  // alert('Notification' in window);
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
@@ -45,7 +45,7 @@ export function requestNotificationPermission() {
       }
     });
   } else{
-    alert('Notification is not supported in this browser');
+    console.log('Notification is not supported in this browser');
   }
 }
 

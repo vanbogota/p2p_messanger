@@ -16,7 +16,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js').then(() => {
-        alert('Service Worker registered');
+        // alert('Service Worker registered');
         console.log('Service Worker registered');
       }).catch(error => {
         alert('Service Worker registration failed: ' + error);
@@ -25,7 +25,7 @@
     }
 
     function askPermission() {
-      alert('Requesting askPermission...');
+      // alert('Requesting askPermission...');
       Notification.requestPermission().then(permission => {
         alert('Permission: ' + permission);
         if (permission === 'granted') {
@@ -43,7 +43,7 @@
 <body>
   <div class="container">
     <h1>P2P Messanger</h1>
-    <button onclick="askPermission()">! Allow notifications !</button>
+    <!-- <button onclick="askPermission()">! Allow notifications !</button> -->
     <div>
       <h2>Step 2. Send message</h2>
       <textarea id="message-input" placeholder="Enter your message"></textarea>
