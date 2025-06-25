@@ -6,8 +6,11 @@
   <link rel="manifest" href="/manifest.json">
   <style>
     body { font-family: sans-serif; }
-    .container { max-width: 500px; margin: 0 auto; padding: 20px; }
-    input, textarea, button { display: block; width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; }
+    .container { max-width: 500px; margin: 0 auto; padding-block: 20px; padding-inline: 5px;}
+    input, textarea, button { display: block; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+    input, textarea { padding: 10px; }
+    button { padding: 5%;}
+    li {margin-bottom: 10px; text-align: justify;}
     #messages { border: 1px solid #ccc; padding: 10px; min-height: 100px; background: #f9f9f9; }
     .message { margin-bottom: 5px; }
     .message.sent { text-align: right; color: blue; }
@@ -52,16 +55,33 @@
 
     <div>
       <h2>Step 1. Configure connection</h2>
-      <textarea id="offer-input" rows="5" placeholder="Вставьте сюда 'offer' или 'answer' от собеседника"></textarea>
-      <button id="process-signal-btn">Configure</button>
+      <textarea id="offer-input" rows="7" placeholder="Paste here 'offer' or 'answer' from your friend"></textarea>
+      <button id="process-signal-btn">Process</button>
       <hr>
       <button id="create-offer-btn">Create offer</button>
-      <textarea id="offer-output" rows="5" readonly placeholder="Ваш 'offer' появится здесь"></textarea>
+      <textarea id="offer-output" rows="7" readonly placeholder="Your 'offer' will appears here, copy it"></textarea>
     </div>
 
     <div>
       <h2>Messages</h2>
       <div id="messages"></div>
+    </div>
+    <div>
+      <h2>What to do:</h2>
+      <ol>
+        <li>If you are using iPhone - Set the site on your home screen: click "Share" → "Add to Home Screen",</li>
+        <li>Do it the same on other iPhone or device - they will be Client A and Client B,</li>
+        <li>If you are using local machine (PC, laptop) - Open this page in browser in two tabs (they will be Client A and Client B),</li>
+        <li>Client A (first tab or device): Click "Create offer" button,</li>
+        <li>Client A: Copy the created "offer",</li>
+        <li>Client B (second tab or device): Paste it into the "offer" input over "Process" button,</li>
+        <li>Client B: Click "Process" button. In the frame under "Create offer" button will appear "answer",</li>
+        <li>Client B: Copy the created "answer" from the frame under "Create offer" button,</li>
+        <li>Client A: Paste it into the "offer" input over "Process" button,</li>
+        <li>Client A: Click "Process" button,</li>
+        <li>If everything OK you will see in 'Messages' first message: 'Connection established!',</li>
+        <li>Start sending messages (Step 2).</li>
+      </ol>
     </div>
   </div>
 

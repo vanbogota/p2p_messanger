@@ -90,7 +90,7 @@ sendButton.onclick = () => {
     displayMessage(message, 'sent');
     messageInput.value = '';
   } else {
-    alert('Соединение не установлено или сообщение пустое.' + dataChannel.readyState);
+    alert('Connection not established or message is empty.' + dataChannel.readyState);
   }
 };
 
@@ -99,9 +99,9 @@ sendButton.onclick = () => {
  */
 function setupDataChannel() {
   dataChannel.onopen = () => {
-    alert('Канал данных открыт!');
-    console.log('Канал данных открыт!');
-    displayMessage('Соединение установлено!', 'received');
+    alert('The data channel is opened!');
+    console.log('The data channel is opened!');
+    displayMessage('Connection established!', 'received');
   };
 
   dataChannel.onmessage = (event) => {
@@ -111,7 +111,7 @@ function setupDataChannel() {
   };
 
   dataChannel.onclose = () => {
-    alert('Канал данных закрыт.');
-    console.log('Канал данных закрыт.');
+    alert('The data channel is closed.');
+    console.log('The data channel is closed.');
   };
 }

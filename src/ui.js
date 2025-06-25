@@ -37,11 +37,11 @@ export function requestNotificationPermission() {
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        alert('Разрешение на уведомления получено.');
-        console.log('Разрешение на уведомления получено.');
+        alert('Permission for notifications has been granted.');
+        console.log('Permission for notifications has been granted.');
       } else {
-        alert('Пользователь отказал в разрешении на уведомления.');
-        console.log('Пользователь отказал в разрешении на уведомления.');
+        alert('The user has denied permission for notifications.');
+        console.log('The user has denied permission for notifications.');
       }
     });
   } else{
@@ -55,7 +55,7 @@ export function requestNotificationPermission() {
  */
 export function showNotification(text) {
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('Новое сообщение', {
+    new Notification('New massage', {
       body: text,
       icon: '/public/icons/icon-192.png'
     });
