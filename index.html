@@ -3,7 +3,7 @@
 <head>
   <title>P2P-уведомления</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="manifest" href="/public/manifest.json">
+  <link rel="manifest" href="/manifest.json">
   <style>
     body { font-family: sans-serif; }
     .container { max-width: 500px; margin: 0 auto; padding: 20px; }
@@ -24,7 +24,7 @@
       });
     }
 
-    function requestNotificationPermission() {
+    function askPermission() {
       Notification.requestPermission().then(permission => {
         alert('Permission: ' + permission);
         if (permission === 'granted') {
@@ -41,7 +41,7 @@
 <body>
   <div class="container">
     <h1>P2P Messanger</h1>
-    <button onclick="requestNotificationPermission()">! Allow notifications !</button>
+    <button onclick="askPermission()">! Allow notifications !</button>
     <div>
       <h2>Step 2. Send message</h2>
       <textarea id="message-input" placeholder="Enter your message"></textarea>

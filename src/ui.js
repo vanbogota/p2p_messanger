@@ -35,8 +35,10 @@ export function requestNotificationPermission() {
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
+        alert('Разрешение на уведомления получено.');
         console.log('Разрешение на уведомления получено.');
       } else {
+        alert('Пользователь отказал в разрешении на уведомления.');
         console.log('Пользователь отказал в разрешении на уведомления.');
       }
     });
