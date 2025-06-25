@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>P2P-уведомления</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="/public/manifest.json">
   <style>
     body { font-family: sans-serif; }
@@ -12,24 +13,46 @@
     .message.sent { text-align: right; color: blue; }
     .message.received { text-align: left; color: green; }
   </style>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('Service Worker registered', registration);
+      }).catch(error => {
+        console.error('Service Worker registration failed', error);
+      });
+    }
+
+    function requestNotificationPermission() {
+      Notification.requestPermission().then(permission => {
+        alert('Permission: ' + permission);
+        if (permission === 'granted') {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification('P2P Messanger', {
+              body: 'Notification permission granted'
+            });
+          });
+        }
+      });
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <h1>P2P Messanger</h1>
-    
+    <button onclick="requestNotificationPermission()">! Allow notifications !</button>
     <div>
-      <h2>Send message</h2>
-      <textarea id="message-input" placeholder="Введите ваше сообщение"></textarea>
+      <h2>Step 2. Send message</h2>
+      <textarea id="message-input" placeholder="Enter your message"></textarea>
       <button id="send-button">Send</button>
     </div>
 
     <div>
-      <h2>Configure connection</h2>
-      <textarea id="offer-input" rows="5" placeholder="Вставьте сюда 'предложение' или 'ответ' от собеседника"></textarea>
+      <h2>Step 1. Configure connection</h2>
+      <textarea id="offer-input" rows="5" placeholder="Вставьте сюда 'offer' или 'answer' от собеседника"></textarea>
       <button id="process-signal-btn">Configure</button>
       <hr>
       <button id="create-offer-btn">Create offer</button>
-      <textarea id="offer-output" rows="5" readonly placeholder="Ваше 'предложение' появится здесь"></textarea>
+      <textarea id="offer-output" rows="5" readonly placeholder="Ваш 'offer' появится здесь"></textarea>
     </div>
 
     <div>
