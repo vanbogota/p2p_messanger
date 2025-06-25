@@ -25,6 +25,7 @@
     }
 
     function askPermission() {
+      alert('Requesting askPermission...');
       Notification.requestPermission().then(permission => {
         alert('Permission: ' + permission);
         if (permission === 'granted') {

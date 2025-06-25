@@ -32,6 +32,7 @@ export function displayMessage(text, type) {
  * Запрашивает разрешение на отправку уведомлений.
  */
 export function requestNotificationPermission() {
+  alert('Requesting requestNotificationPermission...');
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
