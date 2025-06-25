@@ -15,9 +15,11 @@
   </style>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(registration => {
-        console.log('Service Worker registered', registration);
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        alert('Service Worker registered');
+        console.log('Service Worker registered');
       }).catch(error => {
+        alert('Service Worker registration failed: ' + error);
         console.error('Service Worker registration failed', error);
       });
     }
@@ -26,8 +28,8 @@
       Notification.requestPermission().then(permission => {
         alert('Permission: ' + permission);
         if (permission === 'granted') {
-          navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification('P2P Messanger', {
+          navigator.serviceWorker.ready.then(swReg => {
+            swReg.showNotification('P2P Messanger', {
               body: 'Notification permission granted'
             });
           });
