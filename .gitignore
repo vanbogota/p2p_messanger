@@ -1,0 +1,41 @@
+# Системные файлы
+.DS_Store         # macOS
+Thumbs.db         # Windows
+
+# Логи
+*.log
+
+# IDE / редакторы
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Кэш браузеров или live-server
+*.swp
+*.tmp
+
+# Бэкапы
+*~
+*.bak
+*.orig
+
+# Node.js (если начнёшь использовать)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+dist/
+build/
+
+# Parcel / Vite / Webpack (если начнёшь использовать)
+.cache/
+out/
+
+# Env-файлы (если добавишь конфиги или ключи)
+.env
+.env.*
+
+# OS-specific
+ehthumbs.db
