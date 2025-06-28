@@ -9,12 +9,13 @@
     .container { max-width: 500px; margin: 0 auto; padding-block: 20px; padding-inline: 5px;}
     input, textarea, button { display: block; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
     input, textarea { padding: 10px; }
-    button { padding: 5%;}
+    button { padding: 1rem;}
     li, p {margin-bottom: 10px; text-align: justify;}
     #messages { border: 1px solid #ccc; padding: 10px; min-height: 100px; background: #f9f9f9; }
     .message { margin-bottom: 5px; }
     .message.sent { text-align: right; color: blue; }
     .message.received { text-align: left; color: green; }
+    .message.service { text-align: center; color: red; }
   </style>
   <script>
     if ('serviceWorker' in navigator) {

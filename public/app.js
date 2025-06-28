@@ -43,7 +43,7 @@ ws.onmessage = async (event) => {
       if (peers[msg.id].dc) peers[msg.id].dc.close();
       if (peers[msg.id].pc) peers[msg.id].pc.close();
       delete peers[msg.id];
-      displayMessage(`User ${msg.id} left the chat`, 'received');
+      displayMessage(`User ${msg.id} left the chat`, 'service');
     }
   } else if (msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice') {
     await handleSignal(msg);
@@ -119,7 +119,7 @@ async function connectToPeer(peerId) {
         if (peers[peerId].dc) peers[peerId].dc.close();
         pc.close();
         delete peers[peerId];
-        displayMessage(`User ${peerId} disconnected`, 'received');
+        displayMessage(`User ${peerId} disconnected`, 'service');
       }
     }
   };
@@ -164,13 +164,13 @@ function setupDataChannel(dc, peerId) {
   // console.log("Calling setupDataChannel for: ", peerId);
   peers[peerId].dc = dc;
   dc.onopen = () => {
-    displayMessage(`User ${peerId} connected!`, 'received');
+    displayMessage(`User ${peerId} connected!`, 'service');
   };
   dc.onmessage = (event) => {
     displayMessage(event.data, 'received');
     showNotification(event.data);
   };
   dc.onclose = () => {
-    console.log(`Channel with ${peerId} closed`, 'received');
+    console.log(`Channel with ${peerId} closed.`);
   };
 } 
