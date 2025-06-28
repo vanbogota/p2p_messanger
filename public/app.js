@@ -55,7 +55,8 @@ sendButton.onclick = () => {
   const input = messageInput.value; 
   if (!input) return;
 
-  const text = `Get the book you need, delivered to your home for your half hour of scanning the book needed from a library near you: ${input}.\n 
+  const text = `Get the book you need, delivered to your home for your half hour of scanning the book needed from a library near you!\n
+  Requested book (name or ISBN): ${input}.\n 
   Video instructions:\n
   - https://bit.ly/oeBookLamp,\n
   - https://bit.ly/oeBookVideo4Library;\n
