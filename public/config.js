@@ -1,1 +1,1 @@
-window.SIGNALING_SERVER_URL='ws://localhost:3001'; // адрес вашего signaling-сервера
+window.SIGNALING_SERVER_URL="wss://oebook-serve.onrender.com"; //'ws://localhost:3001'; // адрес вашего signaling-сервера
