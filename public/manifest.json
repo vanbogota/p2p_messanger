@@ -1,13 +1,13 @@
 {
   "name": "P2P message service",
-  "short_name": "Books",
+  "short_name": "oeBooks",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4a90e2",
   "icons": [
     {
-      "src": "/public/icons/icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     }

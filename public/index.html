@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>P2P-уведомления</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body { font-family: sans-serif; }
+    .container { max-width: 500px; margin: 0 auto; padding-block: 20px; padding-inline: 5px;}
+    input, textarea, button { display: block; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+    input, textarea { padding: 10px; }
+    button { padding: 5%;}
+    li {margin-bottom: 10px; text-align: justify;}
+    #messages { border: 1px solid #ccc; padding: 10px; min-height: 100px; background: #f9f9f9; }
+    .message { margin-bottom: 5px; }
+    .message.sent { text-align: right; color: blue; }
+    .message.received { text-align: left; color: green; }
+  </style>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        // alert('Service Worker registered');
+        console.log('Service Worker registered');
+      }).catch(error => {
+        alert('Service Worker registration failed: ' + error);
+        console.error('Service Worker registration failed', error);
+      });
+    }
+  </script>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div class="container">
+    <h1>P2P Notificator</h1>
+    <div>
+      <h2 id="my-id"></h2>
+      <h2>Name or ISBN of the book that you haven't found:</h2>
+      <textarea id="message-input" placeholder="Type here"></textarea>
+      <button id="send-button">Request</button>
+    </div>
+
+    <div>
+      <h2>Responses</h2>
+      <div id="messages"></div>
+    </div>
+
+    <div>
+      <h3>Disclaimer</h3>
+      <p>The Application is provided on an “as is” and “as available” basis. The developer makes no representations or warranties of any kind, express or implied, as to the operation of the Application, or the information, content, or materials included therein. You expressly agree that your use of the Application is at your sole risk.
+
+        To the fullest extent permitted by law, the developer disclaims all warranties, express or implied, including, but not limited to, implied warranties of merchantability and fitness for a particular purpose. The developer does not warrant that the Application, its servers, or any content provided through the Application are free of viruses or other harmful components.
+        
+        In no event shall the developer be liable for any damages arising from the use of the Application, including but not limited to direct, indirect, incidental, punitive, and consequential damages.
+        
+        Use of the Application is at your own discretion and risk, and you are solely responsible for any damage to your device or loss of data that results from the use of the Application.</p>
+    </div>
+  </div>
+
+  <script src="/ui.js" type="module"></script>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

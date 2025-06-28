@@ -57,7 +57,7 @@ export function showNotification(text) {
   if ('Notification' in window && Notification.permission === 'granted') {
     new Notification('New massage', {
       body: text,
-      icon: '/public/icons/icon-192.png'
+      icon: '/icons/icon-192.png'
     });
   }
 }
