@@ -42,4 +42,4 @@ function broadcast(msg, exceptId) {
   }
 }
 
-console.log('Signaling server started on ws://localhost:3001');
+console.log(`Signaling server started on ${wss.options.host}:${wss.options.port}`);
