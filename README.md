@@ -2,14 +2,8 @@
 https://democratizing-access-lc3vtqz.gamma.site/
 
 ## instructions
-Вкладка 1 (Пользователь А):
-Нажмите кнопку "Создать предложение".
-В нижнем текстовом поле (Ваше 'предложение' появится здесь) появится длинная строка текста. Скопируйте её.
-Вкладка 2 (Пользователь Б):
-Вставьте скопированный текст в верхнее текстовое поле (Вставьте сюда...).
-Нажмите кнопку "Обработать".
-В нижнем поле появится новый текст ("ответ"). Скопируйте этот новый текст.
-Вернитесь во Вкладку 1 (Пользователь А):
-Вставьте текст от Пользователя Б в верхнее поле.
-Нажмите "Обработать".
-Можете начинать переписку.
+
+Start signaling-сервер (node signaling-server.js).
+Make sure that in app.js the server address matches where it actually runs (ws://localhost:3001).
+Open the app in multiple browsers/devices - all participants will automatically connect with each other and messages will be sent to everyone.
+Change the environment variable SIGNALING_SERVER_URL when deploying.

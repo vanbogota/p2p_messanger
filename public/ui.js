@@ -37,10 +37,10 @@ export function requestNotificationPermission() {
   if ('Notification' in window) {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        alert('Permission for notifications has been granted.');
+        // alert('Permission for notifications has been granted.');
         console.log('Permission for notifications has been granted.');
       } else {
-        alert('The user has denied permission for notifications.');
+        // alert('The user has denied permission for notifications.');
         console.log('The user has denied permission for notifications.');
       }
     });
@@ -57,7 +57,7 @@ export function showNotification(text) {
   if ('Notification' in window && Notification.permission === 'granted') {
     new Notification('New massage', {
       body: text,
-      icon: '/public/icons/icon-192.png'
+      icon: '/icons/icon-192.png'
     });
   }
 }

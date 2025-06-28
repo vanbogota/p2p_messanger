@@ -1,0 +1,1 @@
+window.SIGNALING_SERVER_URL='ws://localhost:3001'; // адрес вашего signaling-сервера
