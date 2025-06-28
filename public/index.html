@@ -10,7 +10,7 @@
     input, textarea, button { display: block; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
     input, textarea { padding: 10px; }
     button { padding: 5%;}
-    li {margin-bottom: 10px; text-align: justify;}
+    li, p {margin-bottom: 10px; text-align: justify;}
     #messages { border: 1px solid #ccc; padding: 10px; min-height: 100px; background: #f9f9f9; }
     .message { margin-bottom: 5px; }
     .message.sent { text-align: right; color: blue; }
@@ -22,7 +22,7 @@
         // alert('Service Worker registered');
         console.log('Service Worker registered');
       }).catch(error => {
-        alert('Service Worker registration failed: ' + error);
+        // alert('Service Worker registration failed: ' + error);
         console.error('Service Worker registration failed', error);
       });
     }
@@ -36,7 +36,7 @@
       <h2 id="my-id"></h2>
       <h2>Name or ISBN of the book that you haven't found:</h2>
       <textarea id="message-input" placeholder="Type here"></textarea>
-      <button id="send-button">Request</button>
+      <button id="send-button">Send Request</button>
     </div>
 
     <div>
@@ -56,6 +56,7 @@
     </div>
   </div>
 
+  <script src="/config.js" type="module"></script>
   <script src="/ui.js" type="module"></script>
   <script src="/app.js" type="module"></script>
 </body>

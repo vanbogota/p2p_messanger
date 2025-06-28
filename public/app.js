@@ -5,7 +5,7 @@ import {
   showNotification } from './ui.js';
 
 // === Настройки ===
-const SIGNALING_SERVER_URL = 'ws://localhost:3001'; // адрес вашего signaling-сервера
+const url = window.SIGNALING_SERVER_URL;
 const configuration = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' }
@@ -22,11 +22,11 @@ const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
 
 // === WebSocket-соединение с signaling-сервером ===
-const ws = new WebSocket(SIGNALING_SERVER_URL);
+const ws = new WebSocket(url);
 
 ws.onmessage = async (event) => {
   const msg = JSON.parse(event.data);
-  console.log("onMessage: ", msg)
+  console.log(msg.type);
   if (msg.type === 'init') {
     myId = msg.id;
     displayMyId(myId);
@@ -52,9 +52,17 @@ ws.onmessage = async (event) => {
 
 // === Отправка сообщения всем ===
 sendButton.onclick = () => {
-  console.log(peers);
-  const text = messageInput.value;
-  if (!text) return;
+  const input = messageInput.value; 
+  if (!input) return;
+
+  const text = `Get the book you need, delivered to your home for your half hour of scanning the book needed from a library near you: ${input}.\n 
+  Video instructions:\n
+  - https://bit.ly/oeBookLamp,\n
+  - https://bit.ly/oeBookVideo4Library;\n
+  Download DocScan app:\n
+  - For Android https://play.google.com/store/apps/details;\n
+  - For iPhone https://apps.apple.com/us/app/doc-scan-pdf-scanner/id453312964`;
+
   for (const peerId in peers) {
     const dc = peers[peerId].dc;
     if (dc && dc.readyState === 'open') {
@@ -67,11 +75,11 @@ sendButton.onclick = () => {
 
 // === Работа с WebRTC ===
 async function connectToPeer(peerId) {
-  console.log("connectToPeer - User Id: ", myId);
-  console.log("connectToPeer: ",peerId);
-  console.log(peers);
+  // console.log("connectToPeer - User Id: ", myId);
+  // console.log("connectToPeer: ",peerId);
+  // console.log(peers);
   if (peers[peerId]) {
-    console.log("connectToPeer returned: ", peers[peerId]);
+    // console.log("connectToPeer returned: ", peers[peerId]);
     return;
   } // уже соединены
   const pc = new RTCPeerConnection(configuration);
@@ -118,9 +126,9 @@ async function connectToPeer(peerId) {
 
 async function handleSignal(msg) {
   const peerId = msg.from;
-  console.log("handleSignal: ", peerId);
-  console.log("handleSignal, peers:");
-  console.log(peers);
+  // console.log("handleSignal: ", peerId);
+  // console.log("handleSignal, peers:");
+  // console.log(peers);
   let pc = peers[peerId] && peers[peerId].pc;
   if (!pc) {
     console.log("handleSignal: pc - false");
@@ -152,16 +160,16 @@ async function handleSignal(msg) {
 }
 
 function setupDataChannel(dc, peerId) {
-  console.log("Calling setupDataChannel for: ", peerId);
+  // console.log("Calling setupDataChannel for: ", peerId);
   peers[peerId].dc = dc;
   dc.onopen = () => {
-    displayMessage(`Connection with ${peerId} established!`, 'received');
+    displayMessage(`User ${peerId} connected!`, 'received');
   };
   dc.onmessage = (event) => {
     displayMessage(event.data, 'received');
     showNotification(event.data);
   };
   dc.onclose = () => {
-    displayMessage(`Channel with ${peerId} closed`, 'received');
+    console.log(`Channel with ${peerId} closed`, 'received');
   };
 } 

@@ -3,7 +3,7 @@ https://democratizing-access-lc3vtqz.gamma.site/
 
 ## instructions
 
-Запустите signaling-сервер (node signaling-server.js).
-Убедитесь, что в app.js адрес сервера совпадает с тем, где он реально работает (ws://localhost:3001).
-Откройте приложение в нескольких браузерах/устройствах — все участники автоматически соединятся друг с другом, и сообщения будут рассылаться всем.
-Если потребуется адаптировать под деплой (например, поменять адрес сервера на внешний), просто измените переменную SIGNALING_SERVER_URL.
+Start signaling-сервер (node signaling-server.js).
+Make sure that in app.js the server address matches where it actually runs (ws://localhost:3001).
+Open the app in multiple browsers/devices - all participants will automatically connect with each other and messages will be sent to everyone.
+Change the environment variable SIGNALING_SERVER_URL when deploying.
