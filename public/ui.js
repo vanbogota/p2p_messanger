@@ -7,7 +7,7 @@
 export function displayMyId(id) {
   const myIdElement = document.getElementById('my-id');
   if (myIdElement) {
-    myIdElement.textContent = id;
+    myIdElement.textContent += id;
   }
 }
 
