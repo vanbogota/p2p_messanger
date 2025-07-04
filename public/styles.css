@@ -7,14 +7,19 @@ body {
 input, 
 textarea, 
 button {
-    display: block; width: 100%; margin-bottom: 10px; box-sizing: border-box; 
+    display: block; 
+    width: 100%; 
+    margin-bottom: 1rem; 
+    box-sizing: border-box; 
 }
 input, 
 textarea { 
     padding: 10px; 
+
 }
 button { 
     padding: 1rem;
+    font-size: 1rem;
 }
 li, 
 p {
