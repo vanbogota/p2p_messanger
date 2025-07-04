@@ -14,7 +14,7 @@ export function displayMyId(id) {
 /**
  * Отображает сообщение на странице.
  * @param {string} text - Текст сообщения.
- * @param {'sent' | 'received'} type - Тип сообщения.
+ * @param {'sent' | 'received' | 'service'} type - Тип сообщения.
  */
 export function displayMessage(text, type) {
   const messagesContainer = document.getElementById('messages');

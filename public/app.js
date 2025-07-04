@@ -18,8 +18,10 @@ let peers = {}; // id -> { pc, dc }
 
 // === UI ===
 requestNotificationPermission();
+const inputName = document.getElementById('input-name');
 const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
+const requestButton = document.getElementById('request-button');
 
 // === WebSocket-соединение с signaling-сервером ===
 const ws = new WebSocket(url);
@@ -52,10 +54,31 @@ ws.onmessage = async (event) => {
 
 // === Отправка сообщения всем ===
 sendButton.onclick = () => {
+  inputName.style.color = 'black';
+  inputName.textContent = 'Message:';
   const input = messageInput.value; 
   if (!input) return;
 
-  const text = `Get the book you need, delivered to your home for your half hour of scanning the book needed from a library near you!\n
+  for (const peerId in peers) {
+    const dc = peers[peerId].dc;
+    if (dc && dc.readyState === 'open') {
+      dc.send(input);
+    }
+  }
+  displayMessage(input, 'sent');
+  messageInput.value = '';
+};
+
+requestButton.onclick = () => {
+  const input = messageInput.value; 
+  
+  if (!input) {
+    inputName.style.color = 'red';
+    inputName.textContent = 'Please enter the book name or ISBN:';
+    return;
+  }
+
+  const bookRequest = `Get the book you need, delivered to your home for your half hour of scanning the book needed from a library near you!\n
   Requested book (name or ISBN): ${input}.\n 
   Video instructions:\n
   - https://bit.ly/oeBookLamp,\n
@@ -67,12 +90,12 @@ sendButton.onclick = () => {
   for (const peerId in peers) {
     const dc = peers[peerId].dc;
     if (dc && dc.readyState === 'open') {
-      dc.send(text);
+      dc.send(bookRequest);
     }
   }
-  displayMessage(text, 'sent');
+  displayMessage(bookRequest, 'sent');
   messageInput.value = '';
-};
+}
 
 // === Работа с WebRTC ===
 async function connectToPeer(peerId) {
@@ -80,7 +103,6 @@ async function connectToPeer(peerId) {
   // console.log("connectToPeer: ",peerId);
   // console.log(peers);
   if (peers[peerId]) {
-    // console.log("connectToPeer returned: ", peers[peerId]);
     return;
   } // уже соединены
   const pc = new RTCPeerConnection(configuration);
@@ -167,7 +189,7 @@ function setupDataChannel(dc, peerId) {
     displayMessage(`User ${peerId} connected!`, 'service');
   };
   dc.onmessage = (event) => {
-    displayMessage(event.data, 'received');
+    displayMessage(`${peerId}: ${event.data}`, 'received');
     showNotification(event.data);
   };
   dc.onclose = () => {
