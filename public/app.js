@@ -5,7 +5,6 @@ import {
   showNotification } from './ui.js';
 
 // === Настройки ===
-const url = window.SIGNALING_SERVER_URL;
 const configuration = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' }
@@ -22,35 +21,62 @@ const inputName = document.getElementById('input-name');
 const sendButton = document.getElementById('send-button');
 const messageInput = document.getElementById('message-input');
 const requestButton = document.getElementById('request-button');
+const statusDiv = document.getElementById('connection-status');
+
+function setStatus(connected) {
+  if (connected) {
+    statusDiv.textContent = 'Connected';
+    statusDiv.style.color = 'green';
+  } else {
+    statusDiv.textContent = 'Disconnected';
+    statusDiv.style.color = 'red';
+  }
+}
 
 // === WebSocket-соединение с signaling-сервером ===
-const ws = new WebSocket(url);
+let ws;
+function connectWebSocket() {
+  ws = new WebSocket(window.SIGNALING_SERVER_URL);
+  ws.onopen = () => setStatus(true);
+  ws.onclose = () => {
+    setStatus(false);
+    console.log('WebSocket disconnected, retrying in 30 seconds...');
+    setTimeout(connectWebSocket, 30000);
+  };
+  ws.onerror = (e) => {
+    setStatus(false);
+    displayMessage(`Connection Error: ${e.message}`, 'service');
+    ws.close();
+  };
+  
+  ws.onmessage = async (event) => {
+    const msg = JSON.parse(event.data);
+    console.log(msg.type);
+    if (msg.type === 'init') {
+      myId = msg.id;
+      displayMyId(myId);
+      // Подключаемся ко всем существующим пирами
+      for (const peerId of msg.peers) {
+        await connectToPeer(peerId);
+      }
+    } else if (msg.type === 'new-peer') {
+      // Новый участник — инициируем соединение
+      await connectToPeer(msg.id);
+    } else if (msg.type === 'peer-left') {
+      // Удаляем пира
+      if (peers[msg.id]) {
+        if (peers[msg.id].dc) peers[msg.id].dc.close();
+        if (peers[msg.id].pc) peers[msg.id].pc.close();
+        delete peers[msg.id];
+        displayMessage(`User ${msg.id} left the chat`, 'service');
+      }
+    } else if (msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice') {
+      await handleSignal(msg);
+    }
+  };
+}
 
-ws.onmessage = async (event) => {
-  const msg = JSON.parse(event.data);
-  console.log(msg.type);
-  if (msg.type === 'init') {
-    myId = msg.id;
-    displayMyId(myId);
-    // Подключаемся ко всем существующим пирами
-    for (const peerId of msg.peers) {
-      await connectToPeer(peerId);
-    }
-  } else if (msg.type === 'new-peer') {
-    // Новый участник — инициируем соединение
-    await connectToPeer(msg.id);
-  } else if (msg.type === 'peer-left') {
-    // Удаляем пира
-    if (peers[msg.id]) {
-      if (peers[msg.id].dc) peers[msg.id].dc.close();
-      if (peers[msg.id].pc) peers[msg.id].pc.close();
-      delete peers[msg.id];
-      displayMessage(`User ${msg.id} left the chat`, 'service');
-    }
-  } else if (msg.type === 'offer' || msg.type === 'answer' || msg.type === 'ice') {
-    await handleSignal(msg);
-  }
-};
+connectWebSocket();
 
 // === Отправка сообщения всем ===
 sendButton.onclick = () => {

@@ -15,8 +15,9 @@ button {
 input, 
 textarea { 
     padding: 10px; 
-
+    font-size: 1rem;
 }
+
 button { 
     padding: 1rem;
     font-size: 1rem;
@@ -32,6 +33,12 @@ p {
     margin: 0 auto; 
     padding-block: 20px; 
     padding-inline: 5px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .message { 
@@ -52,7 +59,10 @@ p {
     text-align: center; 
     color: red; 
 }
-
+.connection-status{
+    font-weight:bold; 
+    color:green;
+}
 #messages { 
     border: 1px solid #ccc; 
     padding: 10px; 
