@@ -1,7 +1,5 @@
-// Функции для взаимодействия с DOM
-
 /**
- * Отображает ID текущего пользователя на странице.
+ * Displays the ID of the current user on the page.
  * @param {string} id 
  */
 export function displayMyId(id) {
@@ -12,9 +10,9 @@ export function displayMyId(id) {
 }
 
 /**
- * Отображает сообщение на странице.
- * @param {string} text - Текст сообщения.
- * @param {'sent' | 'received' | 'service'} type - Тип сообщения.
+ * Displays a message on the page.
+ * @param {string} text - The message text.
+ * @param {'sent' | 'received' | 'service'} type - The message type.
  */
 export function displayMessage(text, type) {
   const messagesContainer = document.getElementById('messages');
@@ -23,13 +21,13 @@ export function displayMessage(text, type) {
     messageElement.classList.add('message', type);
     messageElement.textContent = text;
     messagesContainer.appendChild(messageElement);
-    // Прокручиваем вниз
+    // Scroll to the bottom
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 }
 
 /**
- * Запрашивает разрешение на отправку уведомлений.
+ * Requests permission to send notifications.
  */
 export function requestNotificationPermission() {
   // alert('Requesting requestNotificationPermission...');
@@ -50,12 +48,12 @@ export function requestNotificationPermission() {
 }
 
 /**
- * Показывает системное уведомление.
+ * Shows a system notification.
  * @param {string} text 
  */
 export function showNotification(text) {
   if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification('New massage', {
+    new Notification('New message', {
       body: text,
       icon: '/icons/icon-192.png'
     });

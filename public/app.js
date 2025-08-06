@@ -4,14 +4,14 @@ import {
   requestNotificationPermission, 
   showNotification } from './ui.js';
 
-// === Настройки ===
+// === Configurations ===
 const configuration = {
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' }
   ]
 };
 
-// === Глобальные переменные ===
+// === Global Variables ===
 let myId = null;
 let peers = {}; // id -> { pc, dc }
 
@@ -33,7 +33,7 @@ function setStatus(connected) {
   }
 }
 
-// === WebSocket-соединение с signaling-сервером ===
+// === WebSocket connection to the signaling server ===
 let ws;
 function connectWebSocket() {
   ws = new WebSocket(window.SIGNALING_SERVER_URL);
@@ -55,15 +55,15 @@ function connectWebSocket() {
     if (msg.type === 'init') {
       myId = msg.id;
       displayMyId(myId);
-      // Подключаемся ко всем существующим пирами
+      // Connect to all existing peers
       for (const peerId of msg.peers) {
         await connectToPeer(peerId);
       }
     } else if (msg.type === 'new-peer') {
-      // Новый участник — инициируем соединение
+      // New participant - initiate connection
       await connectToPeer(msg.id);
     } else if (msg.type === 'peer-left') {
-      // Удаляем пира
+      // Remove peer
       if (peers[msg.id]) {
         if (peers[msg.id].dc) peers[msg.id].dc.close();
         if (peers[msg.id].pc) peers[msg.id].pc.close();
@@ -78,7 +78,7 @@ function connectWebSocket() {
 
 connectWebSocket();
 
-// === Отправка сообщения всем ===
+// === Sending messages to all peers ===
 sendButton.onclick = () => {
   inputName.style.color = 'black';
   inputName.textContent = 'Message:';
@@ -123,19 +123,16 @@ requestButton.onclick = () => {
   messageInput.value = '';
 }
 
-// === Работа с WebRTC ===
+// === Work with WebRTC ===
 async function connectToPeer(peerId) {
-  // console.log("connectToPeer - User Id: ", myId);
-  // console.log("connectToPeer: ",peerId);
-  // console.log(peers);
   if (peers[peerId]) {
     return;
-  } // уже соединены
+  } // already connected
   const pc = new RTCPeerConnection(configuration);
   let dc;
   peers[peerId] = { pc, dc: null };
 
-  // Определяем, кто инициатор: peer с меньшим id инициирует соединение
+  // Determine who is the initiator: the peer with the lower ID initiates the connection
   const isInitiator = myId < peerId;
 
   if (isInitiator) {
@@ -175,9 +172,7 @@ async function connectToPeer(peerId) {
 
 async function handleSignal(msg) {
   const peerId = msg.from;
-  // console.log("handleSignal: ", peerId);
-  // console.log("handleSignal, peers:");
-  // console.log(peers);
+  
   let pc = peers[peerId] && peers[peerId].pc;
   if (!pc) {
     console.log("handleSignal: pc - false");
@@ -191,13 +186,13 @@ async function handleSignal(msg) {
       await pc.setLocalDescription(answer);
       ws.send(JSON.stringify({ type: 'answer', to: peerId, sdp: answer }));
     } else {
-      // Игнорируем offer, если не в stable
+      // Ignore offer if not in stable
     }
   } else if (msg.type === 'answer') {
     if (pc.signalingState === 'have-local-offer') {
       await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
     } else {
-      // Игнорируем лишний answer
+      // Ignore extra answer
     }
   } else if (msg.type === 'ice') {
     try {
@@ -209,7 +204,6 @@ async function handleSignal(msg) {
 }
 
 function setupDataChannel(dc, peerId) {
-  // console.log("Calling setupDataChannel for: ", peerId);
   peers[peerId].dc = dc;
   dc.onopen = () => {
     displayMessage(`User ${peerId} connected!`, 'service');

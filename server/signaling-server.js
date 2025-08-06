@@ -4,15 +4,15 @@ const wss = new WebSocket.Server({ port: 3001 });
 let clients = new Map();
 
 wss.on('connection', (ws) => {
-  // Присваиваем уникальный ID каждому клиенту
+  // Assign a unique ID to each client
   const id = Math.random().toString(36).substring(2, 9);
   console.log('New client connected:', id);
   clients.set(id, ws);
 
-  // Отправляем клиенту его ID и список других участников
+  // Send the client their ID and a list of other participants
   ws.send(JSON.stringify({ type: 'init', id, peers: Array.from(clients.keys()).filter(pid => pid !== id) }));
 
-  // Сообщаем остальным о новом участнике
+  // Notify others about the new participant
   broadcast({ type: 'new-peer', id }, id);
 
   ws.on('message', (message) => {
@@ -22,7 +22,7 @@ wss.on('connection', (ws) => {
     } catch (e) {
       return;
     }
-    // Пересылаем сигнал нужному участнику
+    // Forward the signal to the appropriate participant
     if (data.to && clients.has(data.to)) {
       clients.get(data.to).send(JSON.stringify({ ...data, from: id }));
     }
