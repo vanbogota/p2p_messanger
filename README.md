@@ -1,4 +1,4 @@
-# oebook
+# p2p messanger
 https://democratizing-access-lc3vtqz.gamma.site/
 
 ## instructions
